@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Dallas Libraries Map - Proof of Work</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Dallas Locations - Proof of Work</h2>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([32.7767, -96.7970], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+
+    var centerLat = 32.7767;
+    var centerLon = -96.7970;
+    var radiusKm = 75;
+
+
+    var latDelta = radiusKm / 111.32; 
+    var lonDelta = radiusKm / (111.32 * Math.cos(centerLat * Math.PI / 180));
+
+
+    var squareCoords = [
+      [centerLat + latDelta, centerLon - lonDelta], 
+      [centerLat + latDelta, centerLon + lonDelta],
+      [centerLat - latDelta, centerLon + lonDelta], 
+      [centerLat - latDelta, centerLon - lonDelta] 
+    ];
+
+
+    L.polygon(squareCoords, {
+      color: 'gray',
+      fillColor: '#e0ccd0',
+      fillOpacity: 0.5,
+      weight: 2
+    }).addTo(map).bindPopup("A square polygon with a radius of 50 km from the center");
+
+    // --- Data ---
+    var geojsonData = {
+        "features": [
+            {"attributes": {"OBJECTID": 1, "Branch_Name": "Arcadia Park", "Address": "1302 North Justin Ave", "x": 32.757241641, "y": -96.911420797, "Sale": 100}},
+            {"attributes": {"OBJECTID": 2, "Branch_Name": "Dallas West", "Address": "2332 Singleton Boulevard", "x": 32.778650847, "y": -96.860140469, "Sale": 150}},
+            {"attributes": {"OBJECTID": 3, "Branch_Name": "Highland Hills", "Address": "3624 Simpson Stuart Road", "x": 32.67409044, "y": -96.759990999, "Sale": 170}},
+            {"attributes": {"OBJECTID": 4, "Branch_Name": "Renner Frankford", "Address": "6400 Frankford Road", "x": 32.997840305, "y": -96.793770157, "Sale": 200}},
+            {"attributes": {"OBJECTID": 5, "Branch_Name": "Skillman Southwestern", "Address": "5707 Skillman Street", "x": 32.857260703, "y": -96.756310609, "Sale": 90}},
+            {"attributes": {"OBJECTID": 6, "Branch_Name": "Martin Luther King", "Address": "2922 Martin Luther King Jr Blvd", "x": 32.770500753, "y": -96.766850536, "Sale": null}},
+            {"attributes": {"OBJECTID": 7, "Branch_Name": "Pleasant Grove", "Address": "7310 Lake June Road", "x": 32.734240732, "y": -96.695621049, "Sale": 310}},
+            {"attributes": {"OBJECTID": 8, "Branch_Name": "White Rock Hills", "Address": "9150 Ferguson Rd", "x": 32.814997111, "y": -96.694099802, "Sale": 300}},
+            {"attributes": {"OBJECTID": 9, "Branch_Name": "Audelia Road", "Address": "10045 Audelia Road", "x": 32.885351042, "y": -96.717951129, "Sale": 350}},
+            {"attributes": {"OBJECTID": 10, "Branch_Name": "Forest Green", "Address": "9015 Forest Lane", "x": 32.909240161, "y": -96.748690565, "Sale": 250}},
+            {"attributes": {"OBJECTID": 11, "Branch_Name": "Vickery Park", "Address": "8333 Park Lane", "x": 32.871584729, "y": -96.76159216, "Sale": 270}},
+            {"attributes": {"OBJECTID": 12, "Branch_Name": "Polk-Wisdom", "Address": "7151 Library Lane", "x": 32.660921004, "y": -96.841730454, "Sale": 200}},
+            {"attributes": {"OBJECTID": 13, "Branch_Name": "Hampton-Illinois", "Address": "2951 South Hampton Road", "x": 32.714113229, "y": -96.857161826, "Sale": 210}},
+            {"attributes": {"OBJECTID": 14, "Branch_Name": "Lochwood", "Address": "11221 Lochwood Boulevard", "x": 32.848610519, "y": -96.687661082, "Sale": 280}},
+            {"attributes": {"OBJECTID": 15, "Branch_Name": "Bachman Lake", "Address": "9480 Webb Chapel Rd", "x": 32.862430994, "y": -96.859610419, "Sale": 290}},
+            {"attributes": {"OBJECTID": 16, "Branch_Name": "Oak Lawn", "Address": "4100 Cedar Springs Road", "x": 32.812380457, "y": -96.812981008, "Sale": 380}},
+            {"attributes": {"OBJECTID": 17, "Branch_Name": "Prairie Creek", "Address": "-9609 Lake June Rd", "x": 32.734197879, "y": -96.656600477, "Sale": 305}},
+            {"attributes": {"OBJECTID": 18, "Branch_Name": "Timberglen", "Address": "18505 Midway Road", "x": 33.003242963, "y": -96.843858962, "Sale": 300}},
+            {"attributes": {"OBJECTID": 19, "Branch_Name": "Lakewood", "Address": "6121 Worth Street", "x": 32.80997152, "y": -96.75272091, "Sale": 350}},
+            {"attributes": {"OBJECTID": 20, "Branch_name": "Fretz Park", "Address": "6990 Belt Line Road", "x": 32.949960667, "y": -96.783510235, "Sale": 340}},
+            {"attributes": {"OBJECTID": 21, "Branch_Name": "Bookmarks in NorthPark Center", "Address": "8687 North Central Expressway", "x": 32.869690373, "y": -96.770710682, "Sale": 50}},
+            {"attributes": {"OBJECTID": 22, "Branch_Name": "Park Forest", "Address": "3421 Forest Lane", "x": 32.909710292, "y": -96.863480936, "Sale": 80}},
+            {"attributes": {"OBJECTID": 23, "Branch_Name": "North Oak Cliff", "Address": "302 West Tenth Street", "x": 32.745080252, "y": -96.827210543, "Sale": 120}},
+            {"attributes": {"OBJECTID": 24, "Branch_Name": "Kleberg Rylie", "Address": "1301 Edd Road", "x": 32.686331135, "y": -96.600100297, "Sale": 360}},
+            {"attributes": {"OBJECTID": 25, "Branch_Name": "Skyline", "Address": "6006 Everglade Road", "x": 32.785413008, "y": -96.699885175, "Sale": 310}},
+            {"attributes": {"OBJECTID": 26, "Branch_Name": "Preston Royal", "Address": "5626 Royal Lane", "x": 32.89480091, "y": -96.811340159, "Sale": 280}},
+            {"attributes": {"OBJECTID": 27, "Branch_Name": "Grauwyler Park", "Address": "2146 Gilford Street", "x": 32.833751326, "y": -96.85956614, "Sale": 500}},
+            {"attributes": {"OBJECTID": 28, "Branch_Name": "Paul Laurence Dunbar Lancaster-Kiest", "Address": "2008 East Kiest Blvd", "x": 32.715531123, "y": -96.789661117, "Sale": 450}},
+            {"attributes": {"OBJECTID": 29, "Branch_Name": "Central Library", "Address": "1515 Young St", "x": 32.777870751, "y": -96.796930867, "Sale": 400}},
+            {"attributes": {"OBJECTID": 30, "Branch_Name": "Mountain Creek", "Address": "6102 Mountain Creek Parkway", "x": 32.650071113, "y": -96.966500742, "Sale": null}}
+        ]
+    };
+
+
+    const north_lat = 33.6357;
+    const south_lat = 32.392719;
+    const west_lon = -97.797386;
+    const east_lon = -96.110806;
+
+
+    function stringToColor(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      let color = '#';
+      for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xFF;
+        color += ('00' + value.toString(16)).substr(-2);
+      }
+      return color;
+    }
+
+
+    geojsonData.features.forEach(function(feature) {
+      const d = feature.attributes;
+      const lat = d.x;
+      const lon = d.y;
+
+
+      if (lat >= south_lat && lat <= north_lat && lon >= west_lon && lon <= east_lon) {
+        const salesValue = d.Sale ? `$${d.Sale.toLocaleString()}` : "Sales data not available";
+
+        const radius = d.Sale ? 5 + (d.Sale / 50) : 5;
+
+        const color = stringToColor(d.Branch_Name);
+
+        const circle = L.circleMarker([lat, lon], {
+          radius: radius,
+          color: color,
+          fillColor: color,
+          fillOpacity: 0.7
+        }).addTo(map);
+
+        circle.bindPopup(
+          "<b>" + d.Branch_Name + "</b><br>" +
+          d.Address + "<br>" +
+          "Sales: " + salesValue
+        );
+      }
+    });
+
+    // Load DFW_WGS.geojson
+    fetch('DFW_WGS.geojson')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: function(feature) {
+            return {
+              color: 'blue',
+              weight: 2,
+              opacity: 0.6,
+              fillOpacity: 0.1
+            };
+          },
+          onEachFeature: function(feature, layer) {
+            if (feature.properties && feature.properties.name) {
+              layer.bindPopup(feature.properties.name);
+            }
+          }
+        }).addTo(map);
+      })
+      .catch(error => {
+        console.error('Error loading DFW_WGS.geojson:', error);
+      });
+  </script>
+</body>
+</html>
+```
